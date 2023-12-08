@@ -6,13 +6,22 @@ Profile - {{ user.username }}
 
 
 {% block body %}
+{% include "navbar.html" %}
 <p>User profile - {{ user.username }} </p>
+{% if form %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    {{ form.picture }}
+    {{ form.confirmation_button }}
+</form>
+{% endif %}
 
-<a href="{{url_for('logout')}}">Voltar</a>
+
 <img src="{{ url_for('static', filename='post_pictures/default.png') }}" alt="default image">
 
 
 {% for post in user.posts %}
-
+<img src="{{ url_for('static', filename='post_pictures/{}'.format(post.picture)) }}" alt="">
 {% endfor %}
+
 {% endblock body %}

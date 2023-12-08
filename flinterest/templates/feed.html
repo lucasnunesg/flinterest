@@ -1,0 +1,14 @@
+{% extends "homepage.html" %}
+
+{% block head %}{% endblock head %}
+
+{% block body %}
+{% include "navbar.html" %}
+
+{% for post in posts %}
+<img src="{{ url_for('static', filename='post_pictures/{}'.format(post.picture)) }}" alt="">
+{% endfor %}
+
+{% endblock body %}
+
+{% block form %}{% endblock form %}

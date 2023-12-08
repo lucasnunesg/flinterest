@@ -1,8 +1,11 @@
+import os
+
 from flask import redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
+from werkzeug.utils import secure_filename
 
 from flinterest import app, bcrypt, database
-from flinterest.forms import CreateAccountForm, LoginForm
+from flinterest.forms import CreateAccountForm, LoginForm, PostForm
 from flinterest.models import Post, User
 
 
@@ -34,14 +37,29 @@ def createaccount():
     return render_template("createaccount.html", form=createaccountform)
 
 
-@app.route("/profile/<user_id>")
+@app.route("/profile/<user_id>", methods=["GET", "POST"])
 @login_required
 def profile(user_id):
     if int(user_id) == int(current_user.id):
-        return render_template("profile.html", user=current_user)
+        postform = PostForm()
+        if postform.validate_on_submit():
+            file = postform.picture.data
+            safe_filename = secure_filename(file.filename)
+            # save file inside correct folder
+            file_path = os.path.join(
+                os.path.abspath(os.path.dirname(__file__)),
+                app.config["UPLOAD_FOLDER"],
+                safe_filename,
+            )
+            file.save(file_path)
+            # register file in database (safe_filename)
+            post = Post(picture=safe_filename, user_id=current_user.id)
+            database.session.add(post)
+            database.session.commit()
+        return render_template("profile.html", user=current_user, form=postform)
     else:
         user = User.query.get(int(user_id))
-        return render_template("profile.html", user=user)
+        return render_template("profile.html", user=user, form=None)
 
 
 @app.route("/logout")
@@ -49,3 +67,10 @@ def profile(user_id):
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+
+@app.route("/feed", methods=["GET"])
+@login_required
+def feed():
+    posts = Post.query.order_by(Post.created_date.desc()).all()[:20]
+    return render_template("feed.html", posts=posts)

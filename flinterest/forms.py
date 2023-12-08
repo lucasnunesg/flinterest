@@ -2,7 +2,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, SubmitField
+from wtforms import FileField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from flinterest.models import User
@@ -33,3 +33,8 @@ class CreateAccountForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user:
             return ValidationError("Username alreay registered, please select another")
+
+
+class PostForm(FlaskForm):
+    picture = FileField("Picture", validators=[DataRequired()])
+    confirmation_button = SubmitField("Submit picture")
