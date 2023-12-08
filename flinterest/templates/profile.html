@@ -1,0 +1,18 @@
+{% extends "homepage.html" %}
+
+{% block title %}
+Profile - {{ user.username }}
+{% endblock title %}
+
+
+{% block body %}
+<p>User profile - {{ user.username }} </p>
+
+<a href="{{url_for('logout')}}">Voltar</a>
+<img src="{{ url_for('static', filename='post_pictures/default.png') }}" alt="default image">
+
+
+{% for post in user.posts %}
+
+{% endfor %}
+{% endblock body %}

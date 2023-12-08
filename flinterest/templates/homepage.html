@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        Flinterest
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <h1>Homepage</h1>
+    {% block body %}
+    
+    {% block form %}
+    <form action="" method="POST">
+        {{ form.csrf_token }}
+        {{ form.email.label() }}
+        {{ form.email() }}
+        {{ form.password.label() }}
+        {{ form.password() }}
+        {{ form.submit_button() }}
+    </form>
+    {% endblock form %}
+    
+    {%endblock%}
+</body>
+</html>
