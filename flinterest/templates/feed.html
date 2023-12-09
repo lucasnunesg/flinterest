@@ -1,15 +1,18 @@
 {% extends "homepage.html" %}
 
-{% block head %}{% endblock head %}
-
 {% block body %}
-{% include "navbar.html" %}
 
-{% for post in posts %}
-<a href="{{ url_for('profile', user_id=post.user_id) }}">
-<img src="{{ url_for('static', filename='post_pictures/{}'.format(post.picture)) }}" alt="">
-</a>
-{% endfor %}
+{% include "navbar.html" %}
+<body>
+<div class="container">
+    <div class="conteudo">
+    {% for post in posts %}
+    <a href="{{ url_for('profile', user_id=post.user_id) }}" class="bloco-imagem">
+        <img src="{{ url_for('static', filename='post_pictures/{}'.format(post.picture)) }}" alt="">
+    </a>
+    {% endfor %}
+</div>
+</body>
 
 {% endblock body %}
 

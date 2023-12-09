@@ -72,5 +72,5 @@ def logout():
 @app.route("/feed", methods=["GET"])
 @login_required
 def feed():
-    posts = Post.query.order_by(Post.created_date).all().desc()[:20]
+    posts = Post.query.order_by(Post.created_date.desc()).all()[:20]
     return render_template("feed.html", posts=posts)
