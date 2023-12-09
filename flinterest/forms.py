@@ -13,6 +13,11 @@ class LoginForm(FlaskForm):
     password = PasswordField(label="Password", validators=[DataRequired()])
     submit_button = SubmitField(label="Log in")
 
+    def validate_login(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if not user:
+            raise ValidationError("E-mail not registered, create an account.")
+
 
 class CreateAccountForm(FlaskForm):
     email = StringField("E-mail", validators=[DataRequired(), Email()])
@@ -36,7 +41,7 @@ class CreateAccountForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError("Username alreay registered, please select another")
+            raise ValidationError("Username alreay taken, please select another")
 
 
 class PostForm(FlaskForm):

@@ -6,24 +6,56 @@ Profile - {{ user.username }}
 
 
 {% block body %}
+<body>
 {% include "navbar.html" %}
-<p>User profile - {{ user.username }} </p>
+
 {% block form %}
+
+<div class="container">
 {% if form %}
-<form action="" method="POST" enctype="multipart/form-data">
-    {{ form.csrf_token }}
-    {{ form.picture }}
-    {{ form.confirmation_button }}
-</form>
-{% endif %}
+    <form method="POST" enctype="multipart/form-data" class="bloco-add-img">
+        {{ form.csrf_token }}
+        <h2>{{ user.username }} - Add Post</h2>
+
+      <div class="bloco-arquivo">
+        <label for="foto" class="botao-arquivo">
+          Choose file
+            {{ form.picture(class= "input-arquivo", id="foto") }}
+        </label>
+        <span id="imagem-arquivo" class=""></span>
+      </div>
+
+    {{ form.confirmation_button(class="botao-login") }}
+
+    </form>
+    {% else %}
+    <div class="bloco-add-img">
+        <h2>{{ user.username }} - Profile</h2>
+    </div>
+    {% endif %}
+</div>
+
 {% endblock form %}
 
 
-<img src="{{ url_for('static', filename='post_pictures/default.png') }}" alt="default image">
+<div class="conteudo">
+    {% for post in user.posts %}
+    <div class="bloco-imagem">
+      <img src="{{ url_for('static', filename='post_pictures/{}'.format(post.picture)) }}"/>
+    </div>
+    {% endfor %}
+</div>
 
+<script>
+    let input = document.getElementById("foto");
+    let imageFile = document.getElementById("imagem-arquivo");
 
-{% for post in user.posts %}
-<img src="{{ url_for('static', filename='post_pictures/{}'.format(post.picture)) }}" alt="">
-{% endfor %}
+    input.addEventListener("change", () => {
+      let imageInput = document.querySelector("input[type=file]").files[0];
 
+      imageFile.classList.add("visivel");
+      imageFile.innerText = imageInput.name;
+    });
+  </script>
+</body>
 {% endblock body %}

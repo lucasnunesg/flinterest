@@ -30,21 +30,41 @@
 
           <div class="div-input">
             {{ form.email.label(class="label") }}
+            {% if form.email.errors %}
+              {% for error in form.email.errors %}
+                <p style="color: red;font-weight: bold;">{{ error }}</p>
+              {%  endfor %}
+            {% endif %}
             {{ form.email(class="input") }}
           </div>
 
           <div class="div-input">
             {{ form.username.label(class="label") }}
+            {% if form.username.errors %}
+              {% for error in form.username.errors %}
+                <p style="color: red;font-weight: bold;">{{ error }}</p>
+              {%  endfor %}
+            {% endif %}
             {{ form.username(class="input") }}
           </div>
 
           <div class="div-input">
             {{ form.password.label(class="label") }}
+            {% if form.password.errors %}
+              {% for error in form.password.errors %}
+                <p style="color: red;font-weight: bold;">{{ error }}</p>
+              {%  endfor %}
+            {% endif %}
             {{ form.password(class="input") }}
           </div>
 
           <div class="div-input">
             {{ form.password_confirmation.label(class="label") }}
+            {% if form.password_confirmation.errors %}
+              {% for error in form.password_confirmation.errors %}
+                <p style="color: red;font-weight: bold;">{{ error }}</p>
+              {%  endfor %}
+            {% endif %}
             {{ form.password_confirmation(class="input") }}
           </div>
 
