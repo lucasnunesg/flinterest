@@ -20,7 +20,11 @@ class CreateAccountForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired(), Length(6, 28)])
     password_confirmation = PasswordField(
         "Password Confirmation",
-        validators=[DataRequired(), Length(6, 28), EqualTo("password")],
+        validators=[
+            DataRequired(),
+            Length(6, 28),
+            EqualTo("password", message="passwords must match"),
+        ],
     )
     submit_button = SubmitField("Create Account")
 
