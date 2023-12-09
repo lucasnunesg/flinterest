@@ -1,6 +1,6 @@
 import os
 
-from flask import redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.utils import secure_filename
 
@@ -72,5 +72,5 @@ def logout():
 @app.route("/feed", methods=["GET"])
 @login_required
 def feed():
-    posts = Post.query.order_by(Post.created_date.desc()).all()[:20]
+    posts = Post.query.order_by(Post.created_date).all().desc()[:20]
     return render_template("feed.html", posts=posts)

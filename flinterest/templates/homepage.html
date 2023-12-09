@@ -42,7 +42,7 @@
         </nav>
       </header>
 
-      <img src="img/fundo-login.png" class="bg-imagem-pinterest" />
+      <img src="{{ url_for('static', filename='page_pictures/fundo-login.png') }}" class="bg-imagem-pinterest" />
 
       <div class="container-popup">
         {% block form %}
@@ -68,7 +68,7 @@
           <h2>Welcome to Flinterest</h2>
 
           <div class="div-input">
-            {{ form.email.label(class="label",placeholder="email") }}
+            {{ form.email.label(class="label") }}
             {{ form.email(class="input") }}
           </div>
 

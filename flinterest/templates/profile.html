@@ -8,6 +8,7 @@ Profile - {{ user.username }}
 {% block body %}
 {% include "navbar.html" %}
 <p>User profile - {{ user.username }} </p>
+{% block form %}
 {% if form %}
 <form action="" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
@@ -15,6 +16,7 @@ Profile - {{ user.username }}
     {{ form.confirmation_button }}
 </form>
 {% endif %}
+{% endblock form %}
 
 
 <img src="{{ url_for('static', filename='post_pictures/default.png') }}" alt="default image">

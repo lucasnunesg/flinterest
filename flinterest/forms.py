@@ -2,7 +2,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 from flask_wtf import FlaskForm
-from wtforms import FileField, PasswordField, StringField, SubmitField
+from wtforms import FileField, PasswordField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 from flinterest.models import User
@@ -31,12 +31,12 @@ class CreateAccountForm(FlaskForm):
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user:
-            return ValidationError("Email already registered, Log in to proceed")
+            raise ValidationError("Email already registered, Log in to proceed")
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            return ValidationError("Username alreay registered, please select another")
+            raise ValidationError("Username alreay registered, please select another")
 
 
 class PostForm(FlaskForm):
