@@ -3,6 +3,8 @@
 {% block title %}
     Create account - Flinterest
 {% endblock title %}
+{% block body %}
+<h1>Register</h1>
 
 {% block form %}
 <form action="" method="POST">
@@ -17,5 +19,7 @@
     {{ form.password_confirmation() }}
     {{ form.submit_button() }}
 </form>
+<a href="{{ url_for('homepage') }}">Already have an account? Click here to login.</a>
 {% endblock form %}
+{% endblock body %}
 
